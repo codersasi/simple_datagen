@@ -65,13 +65,14 @@ class DataOrders(DataTask):
                 orders_fd.writelines(orders)
                 orders_fd.flush()
                 orders.clear()
-                elapsed = strftime("%H:%M:%S", gmtime(time() - start_time))
-                logger.info(f"Orders Batch Time: {elapsed}")
-                start_time = time()
+
         if len(orders) > 0:
             orders_fd.writelines(orders)
             orders_fd.flush()
             orders.clear()
+        elapsed_time = time() - start_time
+        elapsed = strftime("%H:%M:%S", gmtime(elapsed_time))
+        logger.info(f"Orders-{self.thread_id} Time: {elapsed_time / 86400} {elapsed}")
         orders_fd.close()
 
 
@@ -107,13 +108,13 @@ class DataProfiles(DataTask):
                 profiles_fd.writelines(profiles)
                 profiles_fd.flush()
                 profiles.clear()
-                elapsed = strftime("%H:%M:%S", gmtime(time() - start_time))
-                logger.info(f"Profiles Batch Time: {elapsed}")
-                start_time = time()
         if len(profiles) > 0:
             profiles_fd.writelines(profiles)
             profiles_fd.flush()
             profiles.clear()
+        elapsed_time = time() - start_time
+        elapsed = strftime("%H:%M:%S", gmtime(elapsed_time))
+        logger.info(f"Profiles-{self.thread_id} Time: {elapsed_time / 86400} {elapsed}")
         profiles_fd.close()
 
 
